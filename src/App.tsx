@@ -1,12 +1,33 @@
 import ImageBg from "./assets/profile.jpg";
-import { useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { images } from "./components/ImageExport";
+import { Rerousel } from "rerousel";
 
 gsap.registerPlugin(useGSAP);
 
 export default function App() {
+  const customerLogo = useRef(null);
   const container = useRef(null);
+  const sliderContainer = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNextSlide = () => {
+    setCurrentIndex((prev) => {
+      if (prev >= images.length) return 0;
+      return prev + 1;
+    });
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      goToNextSlide();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   useGSAP(
     () => {
@@ -25,7 +46,6 @@ export default function App() {
       });
       gsap.from(".father-name", { x: -300, duration: 2 });
       gsap.from(".title", { x: -200, duration: 1 });
-      // gsap.from(".description", { x: 200, duration: 1 });
       gsap.from(".description", {
         y: -100,
         opacity: 0,
@@ -37,61 +57,50 @@ export default function App() {
       gsap.to(".container", {
         xPercent: -100,
         ease: "none",
-        duration: 10, // Adjust duration for speed
-        repeat: -1, // Infinite loop
+        duration: 10,
+        repeat: -1,
+      });
+      gsap.set(".box", {
+        x: (i) => i * 100,
+      });
+      gsap.to(".box", {
+        duration: 5,
+        ease: "none",
+        x: "+=500",
+        modifiers: {
+          x: gsap.utils.unitize((x) => parseFloat(x) % 500),
+        },
+        repeat: -1,
       });
     },
 
     { scope: container }
   );
 
-  const images = [
-    {
-      image: "/tech-stack/typescript.jpg",
+  useGSAP(
+    () => {
+      gsap.set(".box", {
+        x: (i) => i * 100,
+      });
+      gsap.to(".box", {
+        duration: 5,
+        ease: "none",
+        x: "-=700",
+        modifiers: {
+          x: gsap.utils.unitize((x) => parseFloat(x) % 1000),
+        },
+        repeat: -1,
+      });
     },
-    {
-      image: "tech-stack/JavaScript.jpg",
-    },
-    {
-      image: "tech-stack/react.jpg",
-    },
-    {
-      image: "tech-stack/next.jpg",
-    },
-    {
-      image: "tech-stack/Tailwind.jpg",
-    },
-    {
-      image: "tech-stack/sqlite.jpg",
-    },
-    {
-      image: "tech-stack/node.jpg",
-    },
-    {
-      image: "tech-stack/github.jpg",
-    },
-    {
-      image: "tech-stack/git.jpg",
-    },
-    {
-      image: "tech-stack/html.jpg",
-    },
-    {
-      image: "tech-stack/css.jpg",
-    },
-    {
-      image: "tech-stack/mongodb.jpg",
-    },
-  ];
-  // bg-[rgba(0,0,0,0.7)]
+
+    { scope: sliderContainer }
+  );
+
   return (
     <div
-      className={`w-full h-[200vh] bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 `}
+      className={`w-full h-[200vh] bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
     >
-      <div
-        className="flex w-full h-screen  justify-center covered-bg"
-        ref={container}
-      >
+      <div className="flex flex-col w-full h-full items-center gap-10  covered-bg">
         <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
           <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.47)] w-fit rounded-4xl items-center text-gray-100">
             <img
@@ -115,7 +124,10 @@ export default function App() {
             </ul>
           </div>
         </div>
-        <section className=" flex flex-col items-center flex-grow mt-36 box gap-20">
+        <section
+          className=" flex flex-col items-center mt-36 box gap-20 mb-20"
+          ref={container}
+        >
           <h3 className="flex gap-2 border w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
             <span className="w-5 h-5 bg-[#27d655] rounded-3xl open "></span>
             I'm currently available
@@ -137,14 +149,35 @@ export default function App() {
               <span>Get In touch</span>
             </div>
           </div>
-          {/* <div className="flex h-18 mt-15 gap-2 space-x-8 w-3/4 container">
+        </section>
+        <h3 className="text-2xl text-white">Tools</h3>
+        <div className="mt-1 flex justify-center w-1/2 h-22 overflow-hidden relative">
+          {/* <div
+            className="flex relative overflow-hidden w-full h-22 box-slider"
+            ref={sliderContainer}
+          >
             {images.map((image) => (
-              <li key={image.image} className="h-14 w-14">
-                <img src={image.image} className="h-14 w-20" alt="" />
-              </li>
+              <img
+                src={image.image}
+                className="h-22 w-30 absolute align-middle box"
+                alt=""
+              />
             ))}
           </div> */}
-        </section>
+
+          <Rerousel itemRef={customerLogo} interval={300}>
+            {images.map((c) => {
+              return (
+                <img
+                  src={c.image}
+                  alt=""
+                  className="h-22 w-30"
+                  ref={customerLogo}
+                />
+              );
+            })}
+          </Rerousel>
+        </div>
       </div>
     </div>
   );
