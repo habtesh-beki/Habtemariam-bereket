@@ -1,33 +1,47 @@
 import ImageBg from "./assets/profile.jpg";
-
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { images } from "./components/ImageExport";
+// import { images } from "./utils/ImageExport";
+// import { imageProtifolio1 } from "./utils/ImageExport";
+import { images } from "./utils/ImageExport";
+// import { imageProtifolio1 } from "./utils/ImageExport";
 import { Rerousel } from "rerousel";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
+gsap.defaults({ ease: "none", duration: 2 });
 
 export default function App() {
   const customerLogo = useRef(null);
   const container = useRef(null);
-  const sliderContainer = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef(null);
+  const scrollRef = useRef(null);
 
-  const goToNextSlide = () => {
-    setCurrentIndex((prev) => {
-      if (prev >= images.length) return 0;
-      return prev + 1;
-    });
-  };
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      goToNextSlide();
-    }, 3000);
+      tl.from(".img-1", { xPercent: -100, duration: 0.12 })
+        .from(".img-2", { xPercent: 100, duration: 0.12 })
+        .from(".img-3", { yPercent: -100, duration: 0.12 })
+        .from(".img-4", { xPercent: 100, duration: 0.12 })
+        .from("img-5", {});
 
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+      ScrollTrigger.create({
+        animation: tl,
+        trigger: ".newContainer",
+        scrub: true,
+        start: "top top",
+        end: "+=40000",
+        markers: true,
+        pin: true,
+        anticipatePin: 1,
+      });
+    },
+    { scope: scrollRef }
+  );
 
   useGSAP(
     () => {
@@ -60,49 +74,36 @@ export default function App() {
         duration: 10,
         repeat: -1,
       });
-      gsap.set(".box", {
-        x: (i) => i * 100,
-      });
-      gsap.to(".box", {
-        duration: 5,
-        ease: "none",
-        x: "+=500",
-        modifiers: {
-          x: gsap.utils.unitize((x) => parseFloat(x) % 500),
-        },
-        repeat: -1,
-      });
     },
 
     { scope: container }
   );
 
-  useGSAP(
-    () => {
-      gsap.set(".box", {
-        x: (i) => i * 100,
-      });
-      gsap.to(".box", {
-        duration: 5,
-        ease: "none",
-        x: "-=700",
-        modifiers: {
-          x: gsap.utils.unitize((x) => parseFloat(x) % 1000),
-        },
-        repeat: -1,
-      });
-    },
+  // useEffect(() => {
+  //   const handleMouseMove = (e) => {
+  //     setCursourPosition({ x: e.clientX, y: e.clientY });
+  //   };
+  //   window.addEventListener("mousemove", handleMouseMove);
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
 
-    { scope: sliderContainer }
-  );
+  // useEffect(() => {
+  //   const handleScrollY = () => {
+  //     setScrollPosition(window.scrollY);
+  //   };
+
+  //   window.addEventListener("scroll", handleScrollY);
+  // });
 
   return (
     <div
-      className={`w-full h-[200vh] bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
+      className={`w-full h-auto bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
     >
-      <div className="flex flex-col w-full h-full items-center gap-10  covered-bg">
+      <div className="flex flex-col w-full h-full items-center   covered-bg">
         <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
-          <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.47)] w-fit rounded-4xl items-center text-gray-100">
+          <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-fit rounded-4xl items-center text-gray-100">
             <img
               className="rounded-4xl cursor-pointer w-10 h-10"
               src={ImageBg}
@@ -150,34 +151,65 @@ export default function App() {
             </div>
           </div>
         </section>
-        <h3 className="text-2xl text-white">Tools</h3>
-        <div className="mt-1 flex justify-center w-1/2 h-22 overflow-hidden relative">
-          {/* <div
-            className="flex relative overflow-hidden w-full h-22 box-slider"
-            ref={sliderContainer}
-          >
-            {images.map((image) => (
-              <img
-                src={image.image}
-                className="h-22 w-30 absolute align-middle box"
-                alt=""
-              />
-            ))}
-          </div> */}
-
+        <h3 className="text-2xl mt-8 text-white font-bold">Tools</h3>
+        <div className=" flex justify-center w-1/2 h-22 overflow-hidden relative mb-16">
           <Rerousel itemRef={customerLogo} interval={300}>
             {images.map((c) => {
               return (
                 <img
-                  src={c.image}
+                  src={c}
                   alt=""
-                  className="h-22 w-30"
+                  className="h-16 w-16 rounded-4xl box"
                   ref={customerLogo}
                 />
               );
             })}
           </Rerousel>
         </div>
+        <h2 className="text-3xl text-white uppercase font-bold mt-12 mb-10">
+          Some Projects with image
+        </h2>
+        <div
+          className="flex w-full h-[100vh] overflow-hidden relative "
+          ref={scrollRef}
+          id="container_2"
+        >
+          <div className="newContainer h-[100vh] w-full">
+            <img
+              className="img-5 absolute w-full h-screen"
+              src="/portifolio/13.png"
+              alt=""
+            />
+            <img
+              className="img-1 absolute w-full h-screen"
+              src="/portifolio/17.png"
+              alt=""
+            />
+            <img
+              className="img-2 absolute w-full h-screen"
+              src="/portifolio/2.png"
+              alt=""
+            />
+            <img
+              className="img-3 absolute w-full h-screen"
+              src="/portifolio/18.png"
+              alt=""
+            />
+            <img
+              className="img-4 absolute w-full h-screen"
+              src="/portifolio/5.png"
+              alt=""
+            />
+          </div>
+        </div>
+        <section className="w-full mt-12 h-[200vh] ">
+          <div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </section>
       </div>
     </div>
   );
