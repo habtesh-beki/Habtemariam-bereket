@@ -1,22 +1,40 @@
 import ImageBg from "./assets/profile.jpg";
-import { useEffect, useRef, useState } from "react";
+import MyExpertise from "./components/MyExpertise";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-// import { images } from "./utils/ImageExport";
-// import { imageProtifolio1 } from "./utils/ImageExport";
-import { images } from "./utils/ImageExport";
-// import { imageProtifolio1 } from "./utils/ImageExport";
-import { Rerousel } from "rerousel";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 gsap.defaults({ ease: "none", duration: 2 });
 
+const Projects = [
+  {
+    img: "/portifolio/2.png",
+    title: "AASTU Gebi-gubye Student Management App",
+    desc: "We've done orthodox student management system for addis abeba science and technology university",
+    frontend: "https://github.com/habtesh-beki/aastu_gebi_gubaye_frontend.git",
+    backend: "https://github.com/HaileabT/aastu_gibi_gubaye_api.git",
+  },
+  {
+    img: "/portifolio/13.png",
+    title: "Ticketing System",
+    desc: "I've done Ticketing system user can create ticket and admin can update the status of it",
+    frontend: "",
+    backend: "",
+  },
+  {
+    img: "/portifolio/16.png",
+    title: "Simple blogging app",
+    desc: "We've done blogging app user can create blog and read others blog",
+    frontend: "",
+    backend: "",
+  },
+];
+
 export default function App() {
-  const customerLogo = useRef(null);
   const container = useRef(null);
-  const containerRef = useRef(null);
   const scrollRef = useRef(null);
 
   useGSAP(
@@ -26,16 +44,15 @@ export default function App() {
       tl.from(".img-1", { xPercent: -100, duration: 0.12 })
         .from(".img-2", { xPercent: 100, duration: 0.12 })
         .from(".img-3", { yPercent: -100, duration: 0.12 })
-        .from(".img-4", { xPercent: 100, duration: 0.12 })
-        .from("img-5", {});
+        .from(".img-4", { xPercent: 100, duration: 0.12 });
 
       ScrollTrigger.create({
         animation: tl,
         trigger: ".newContainer",
         scrub: true,
         start: "top top",
-        end: "+=40000",
-        markers: true,
+        end: "+=4000",
+        // markers: true,
         pin: true,
         anticipatePin: 1,
       });
@@ -101,7 +118,7 @@ export default function App() {
     <div
       className={`w-full h-auto bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
     >
-      <div className="flex flex-col w-full h-full items-center   covered-bg">
+      <div className="flex flex-col w-full h-full items-center  covered-bg">
         <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
           <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-fit rounded-4xl items-center text-gray-100">
             <img
@@ -126,7 +143,7 @@ export default function App() {
           </div>
         </div>
         <section
-          className=" flex flex-col items-center mt-36 box gap-20 mb-20"
+          className=" flex flex-col items-center justify-center h-screen  box gap-10 "
           ref={container}
         >
           <h3 className="flex gap-2 border w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
@@ -151,26 +168,11 @@ export default function App() {
             </div>
           </div>
         </section>
-        <h3 className="text-2xl mt-8 text-white font-bold">Tools</h3>
-        <div className=" flex justify-center w-1/2 h-22 overflow-hidden relative mb-16">
-          <Rerousel itemRef={customerLogo} interval={300}>
-            {images.map((c) => {
-              return (
-                <img
-                  src={c}
-                  alt=""
-                  className="h-16 w-16 rounded-4xl box"
-                  ref={customerLogo}
-                />
-              );
-            })}
-          </Rerousel>
-        </div>
-        <h2 className="text-3xl text-white uppercase font-bold mt-12 mb-10">
-          Some Projects with image
+        <h2 className="text-3xl text-white uppercase font-bold mb-10">
+          Some Of My Projects with image
         </h2>
         <div
-          className="flex w-full h-[100vh] overflow-hidden relative "
+          className="flex w-full h-[100vh] overflow-hidden relative mb-10"
           ref={scrollRef}
           id="container_2"
         >
@@ -182,7 +184,7 @@ export default function App() {
             />
             <img
               className="img-1 absolute w-full h-screen"
-              src="/portifolio/17.png"
+              src="/portifolio/16.png"
               alt=""
             />
             <img
@@ -202,12 +204,30 @@ export default function App() {
             />
           </div>
         </div>
-        <section className="w-full mt-12 h-[200vh] ">
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <MyExpertise />
+        <section className="flex flex-col items-center  w-full h-full mb-10">
+          <h1 className="text-white text-3xl mb-10">My Works</h1>
+          <div className="grid grid-cols-3 w-1/2 h-[60vh] gap-10 text-[#5f6361] relative">
+            {Projects.map((project) => (
+              <div className="flex flex-col p-2 h-3/5 rounded-2xl border-4 border-[#5f6361] duration-300  Expretise-card">
+                <img
+                  className="w-full h-50 rounded-t-2xl"
+                  src={project.img}
+                  alt=""
+                />
+                <h2 className="text-xl text-white my-2">{project.title}</h2>
+                <div className="mt-auto mb-3">
+                  <p>{project.desc}</p>
+                  <div className="flex text-blue-700 justify-between">
+                    <a className="" href={project.frontend}>
+                      frontend
+                    </a>
+
+                    <a href={project.backend}>backend</a>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>
