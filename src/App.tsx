@@ -19,6 +19,7 @@ gsap.defaults({ ease: "none", duration: 2 });
 
 export default function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState<number>();
   const container = useRef(null);
   const scrollRef = useRef(null);
   const logoRef = useRef(null);
@@ -152,22 +153,46 @@ export default function App() {
         x: cursorPosition.x,
         y: cursorPosition.y,
         duration: 0.3,
+        scale: scale,
         ease: "power2.out",
-        overwrite: false,
       });
     }
   }, [cursorPosition]);
 
-  useEffect(() => {});
+  useGSAP(
+    () => {
+      const hoverTextAnim = document.querySelector(".name");
+
+      const handleMouseMove = (e: Event) => {
+        // e.stopPropagation();
+        setScale(10);
+      };
+      const handleMouseOut = (e: Event) => {
+        // e.stopPropagation();
+        setScale(1);
+      };
+      hoverTextAnim?.addEventListener("mouseenter", handleMouseMove);
+      hoverTextAnim?.addEventListener("mouseout", handleMouseOut);
+
+      return () => {
+        hoverTextAnim?.removeEventListener("mouseenter", handleMouseMove);
+        hoverTextAnim?.removeEventListener("mouseout", handleMouseMove);
+      };
+    },
+    { scope: ".name" }
+  );
 
   return (
     <>
       <div
         className={`w-full h-auto bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
       >
-        <div ref={hoverAnimation}>
-          <div className="absolute w-6 h-6 bg-white rounded-4xl hover-anime -z-100"></div>
-        </div>
+        {/* <div  className="z-[1000]"> */}
+        <div
+          ref={hoverAnimation}
+          className="fixed w-6 h-6 bg-white rounded-4xl hover-anime z-[1000] mix-blend-difference"
+        ></div>
+        {/* </div> */}
 
         <div className="flex flex-col w-full h-full items-center  covered-bg">
           <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
@@ -202,15 +227,19 @@ export default function App() {
             ref={container}
             id="home"
           >
-            <h3 className="flex gap-2 border w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
+            <h3 className="flex gap-2 border z-0 w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
               <span className="w-5 h-5 bg-[#27d655] rounded-3xl open "></span>
               I'm currently available
             </h3>
-            <div className="flex flex-col gap-4 w-1/2 text-white  justify-center items-center text-center">
-              <h1 className="flex gap-2 text-7xl blurred-text  my-name">
-                <span className="myname">Habtemariam</span>
-                <span className="father-name">Bereket</span>{" "}
-              </h1>
+            <div className="flex flex-col gap-4 z-0 w-1/2 text-white  justify-center items-center text-center">
+              <div className="name w-max h-max">
+                <h1 className="flex gap-2 text-7xl name hover-anime">
+                  Habtemariam Bereket
+                  {/* <span className="myname ">Habtemariam</span>
+                  <span className="father-name">Bereket</span>{" "} */}
+                </h1>
+              </div>
+
               <h2 className="text-4xl blurred-text title">
                 Full-Stack Developer
               </h2>
