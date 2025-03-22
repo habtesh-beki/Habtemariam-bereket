@@ -1,6 +1,9 @@
 export default function MyExpertise() {
   return (
-    <section className="flex justify-center w-full  mt-800 h-[90vh] text-white">
+    <section
+      className="flex justify-center w-full  mt-800 h-[90vh] text-white"
+      id="expertise"
+    >
       <div className="w-1/2 flex flex-col items-center ">
         <h1 className="text-3xl mb-15">My Expertise</h1>
         <div className="grid grid-cols-2 gap-4">
