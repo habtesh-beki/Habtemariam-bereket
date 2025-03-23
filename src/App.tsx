@@ -19,7 +19,7 @@ gsap.defaults({ ease: "none", duration: 2 });
 
 export default function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [scale, setScale] = useState<number>();
+  const [scale, setScale] = useState<number>(1);
   const container = useRef(null);
   const scrollRef = useRef(null);
   const logoRef = useRef(null);
@@ -87,35 +87,35 @@ export default function App() {
   );
   useGSAP(
     () => {
-      gsap.from(".good", { y: -300, duration: 1 });
+      // gsap.from(".good", { y: -300, duration: 1 });
       gsap.to(".open", {
-        boxShadow: "0 0 20px 10px rgba(39, 214, 85, 0.7)",
+        boxShadow: "0 0 15px 6px rgba(39, 214, 85, 0.7)",
         opacity: 1,
         duration: 0.6,
         ease: "power1.inOut",
         repeat: -1,
         yoyo: true,
       });
-      gsap.from(".x", {
-        x: 300,
-        duration: 2,
-      });
-      gsap.from(".father-name", { x: -300, duration: 2 });
-      gsap.from(".title", { x: -200, duration: 1 });
-      gsap.from(".description", {
-        y: -100,
-        opacity: 0,
-        rotation: "random(-80, 80)",
-        duration: 0.7,
-        ease: "back",
-        stagger: 0.1,
-      });
-      gsap.to(".container", {
-        xPercent: -100,
-        ease: "none",
-        duration: 10,
-        repeat: -1,
-      });
+      // gsap.from(".x", {
+      //   x: 300,
+      //   duration: 2,
+      // });
+      // gsap.from(".father-name", { x: -300, duration: 2 });
+      // gsap.from(".title", { x: -200, duration: 1 });
+      // gsap.from(".description", {
+      //   y: -100,
+      //   opacity: 0,
+      //   rotation: "random(-80, 80)",
+      //   duration: 0.7,
+      //   ease: "back",
+      //   stagger: 0.1,
+      // });
+      // gsap.to(".container", {
+      //   xPercent: -100,
+      //   ease: "none",
+      //   duration: 10,
+      //   repeat: -1,
+      // });
     },
 
     { scope: container }
@@ -155,48 +155,44 @@ export default function App() {
         duration: 0.3,
         scale: scale,
         ease: "power2.out",
+        overwrite: "auto",
       });
     }
   }, [cursorPosition]);
 
-  useGSAP(
-    () => {
-      const hoverTextAnim = document.querySelector(".name");
+  useEffect(() => {
+    const handleMouseEnter = () => {
+      setScale(10);
+      console.log(scale);
+    };
+    const handleMouseLeave = () => {
+      setScale(1);
+    };
+    const hoverElements = document.querySelectorAll(".glass-animation");
+    const ac = new AbortController();
+    const { signal } = ac;
+    hoverElements.forEach((element) => {
+      element.addEventListener("mouseenter", handleMouseEnter, { signal });
+      element.addEventListener("mouseleave", handleMouseLeave, { signal });
+    });
 
-      const handleMouseMove = (e: Event) => {
-        // e.stopPropagation();
-        setScale(10);
-      };
-      const handleMouseOut = (e: Event) => {
-        // e.stopPropagation();
-        setScale(1);
-      };
-      hoverTextAnim?.addEventListener("mouseenter", handleMouseMove);
-      hoverTextAnim?.addEventListener("mouseout", handleMouseOut);
-
-      return () => {
-        hoverTextAnim?.removeEventListener("mouseenter", handleMouseMove);
-        hoverTextAnim?.removeEventListener("mouseout", handleMouseMove);
-      };
-    },
-    { scope: ".name" }
-  );
+    return () => {
+      ac.abort();
+    };
+  }, []);
 
   return (
     <>
       <div
+        ref={hoverAnimation}
+        className="fixed w-6 h-6 bg-white rounded-4xl hover-anime z-[1000] mix-blend-difference"
+      ></div>
+      <div
         className={`w-full h-auto bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
       >
-        {/* <div  className="z-[1000]"> */}
-        <div
-          ref={hoverAnimation}
-          className="fixed w-6 h-6 bg-white rounded-4xl hover-anime z-[1000] mix-blend-difference"
-        ></div>
-        {/* </div> */}
-
         <div className="flex flex-col w-full h-full items-center  covered-bg">
           <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
-            <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-fit rounded-4xl items-center text-gray-100">
+            <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-fit rounded-4xl items-center text-gray-100 glass-animation">
               <a href="#home">
                 {" "}
                 <img
@@ -210,7 +206,7 @@ export default function App() {
                   <a href="#expertise">Expertise</a>
                 </li>
                 <li className="cursor-pointer py-2 px-3 hover:bg-[rgba(71,68,68,0.8)] duration-500 hover:border border-black rounded-2xl">
-                  <a href="#my-work">My Work</a>
+                  <a href="#my-work inline">My Work</a>
                 </li>
                 <li className="cursor-pointer py-2 px-3 hover:bg-[rgba(71,68,68,0.8)] duration-500 hover:border border-black rounded-2xl">
                   <a href="#tech-stack">tech stack</a>
@@ -223,36 +219,36 @@ export default function App() {
           </div>
 
           <section
-            className=" flex flex-col items-center justify-center h-screen  box gap-10 "
-            ref={container}
+            className=" flex flex-col items-center justify-center h-screen   gap-10 "
             id="home"
           >
-            <h3 className="flex gap-2 border z-0 w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
+            <h3
+              className="flex gap-2 border z-0 w-fit px-10 py-2 text-xl rounded-4xl h-fit  text-gray-600 items-center"
+              ref={container}
+            >
               <span className="w-5 h-5 bg-[#27d655] rounded-3xl open "></span>
               I'm currently available
             </h3>
-            <div className="flex flex-col gap-4 z-0 w-1/2 text-white  justify-center items-center text-center">
-              <div className="name w-max h-max">
-                <h1 className="flex gap-2 text-7xl name hover-anime">
-                  Habtemariam Bereket
-                  {/* <span className="myname ">Habtemariam</span>
-                  <span className="father-name">Bereket</span>{" "} */}
+            <div className="flex flex-col gap-4 z-0 w-1/2 text-white  justify-center items-center text-center ">
+              <div className=" w-max h-max ">
+                <h1 className="flex gap-2 text-7xl blurred-text">
+                  <span className="">Habtemariam</span>
+                  <span className="">Bereket</span>
                 </h1>
               </div>
 
-              <h2 className="text-4xl blurred-text title">
-                Full-Stack Developer
-              </h2>
-              <h4 className="text-3xl blurred-text description">
+              <h2 className="text-4xl blurred-text ">Full-Stack Developer</h2>
+              <h4 className="text-3xl blurred-text ">
                 I transform innovative ideas into powerful, intuitive web
                 applications using modern technologies.{" "}
               </h4>
 
-              <Button className="uppercase text-white w-50 h-16 text-2xl cursor-pointer bg-[#ff4d00] hover:bg-[#ff3a00] mt-10">
+              <Button className="uppercase text-white w-50 h-16 text-2xl cursor-pointer bg-[#ff4d00] hover:bg-[#ff3a00] mt-10 glass-animation">
                 <a href="mailto:habteshbeki@gmail.com">Get in touch</a>
               </Button>
             </div>
           </section>
+
           <h2 className="text-3xl text-white uppercase font-bold mb-10">
             Some Of My Projects with image
           </h2>
@@ -295,7 +291,7 @@ export default function App() {
             className=" w-full flex flex-col items-center gap-6"
             ref={logoRef}
           >
-            <div>
+            <div className="glass-animation">
               <h1 className="text-4xl font-bold text-white ">Tech-Stack</h1>
             </div>
             <div
@@ -334,7 +330,7 @@ export default function App() {
               <p>
                 Got an idea? Starting a project? Need to chat? Let’s connect!
               </p>
-              <h2 className="text-6xl">
+              <h2 className="text-6xl glass-animation">
                 Reach out, and let’s create something amazing together!
               </h2>
               <h1>
