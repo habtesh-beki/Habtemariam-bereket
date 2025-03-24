@@ -1,10 +1,10 @@
 export default function MyExpertise() {
   return (
     <section
-      className="flex justify-center w-full  mt-800 h-max text-white mb-10"
+      className="flex justify-center w-full  md:mt-800 lg:mt-800 mt-10 h-max text-white mb-10"
       id="expertise"
     >
-      <div className="lg:w-1/2 md:w-3/4 w-full flex flex-col items-center mx-2">
+      <div className="lg:w-1/2 2md:w-3/4 md:w-3/4 w-full flex flex-col items-center mx-2">
         <h1 className="text-3xl mb-15">My Expertise</h1>
         <div className="grid lg:grid-cols-2 md:grid-cols-2  gap-4">
           <div className="border-2 lg:px-10 sm:px-6 px-2 py-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
