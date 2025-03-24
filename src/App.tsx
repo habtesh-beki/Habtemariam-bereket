@@ -1,5 +1,5 @@
 import ImageBg from "./assets/profile.jpg";
-import { Copyright, Menu } from "lucide-react";
+import { Copyright } from "lucide-react";
 import MyExpertise from "./components/MyExpertise";
 import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
