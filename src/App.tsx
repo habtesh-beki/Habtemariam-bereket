@@ -202,7 +202,7 @@ export default function App() {
             </div>
           </div>
           <div className="fixed justify-between block sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden w-full z-[1000]">
-            <div className="w-full h-max p-2 flex justify-between bg-[#03070e] items-center">
+            <div className="w-full h-max p-2 flex justify-between bg-[#071120] items-center">
               <a href="#home">
                 <img
                   className="rounded-4xl cursor-pointer w-10 h-10"
@@ -215,7 +215,7 @@ export default function App() {
             </div>
             {/* {isOpen && ( */}
             <div
-              className={`w-full text-white flex justify-center text-2xl bg-[#03070e] border-t py-4 transition-all duration-500 ease-in-out ${
+              className={`w-full text-white flex justify-center text-2xl bg-[#071120] border-t py-4 transition-all duration-500 ease-in-out ${
                 isOpen
                   ? "max-h-96 opacity-100"
                   : "max-h-0 opacity-0 overflow-hidden"
@@ -349,7 +349,7 @@ export default function App() {
             </div>
           </section>
           <footer
-            className="w-full flex justify-center bg-[#03070e]"
+            className="w-full flex justify-center bg-[#071120]"
             id="contact"
           >
             <div
