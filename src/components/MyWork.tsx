@@ -25,15 +25,15 @@ const Projects = [
 export default function MyWork() {
   return (
     <section
-      className="flex flex-col items-center  w-full h-full mb-10"
+      className="flex flex-col items-center  w-full h-max m-25"
       id="my-work"
     >
       <h1 className="text-white text-3xl mb-10">My latest Works</h1>
-      <div className="grid grid-cols-3 lg:w-1/2 md:w-3/4 sm:w-full h-[60vh] gap-10 text-[#5f6361] relative">
+      <div className="grid lg:grid-cols-3 lg:w-1/2 md:w-3/4 sm:w-full h-max gap-10 text-[#5f6361] relative mx-4">
         {Projects.map((project) => (
-          <div className="flex flex-col p-2 h-3/5 rounded-2xl border-4 border-[#5f6361] duration-300  Expretise-card-1 overflow-hidden">
+          <div className="flex flex-col p-2 lg:h-90 md:90 h-max rounded-2xl border-2 border-[#5f6361] duration-300  Expretise-card-1 overflow-hidden">
             <img
-              className="w-full h-50 rounded-t-2xl"
+              className="w-max h-max rounded-t-2xl"
               src={project.img}
               alt=""
             />
