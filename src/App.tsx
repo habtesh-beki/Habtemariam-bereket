@@ -239,7 +239,10 @@ export default function App() {
             {/* )} */}
           </div>
 
-          <section className=" flex flex-col items-center justify-center h-screen  gap-10 w-full">
+          <section
+            className=" flex flex-col items-center justify-center h-screen  gap-10 w-full"
+            id="home"
+          >
             <h3
               className="flex gap-2 border w-max px-6 py-2 text-xl rounded-4xl h-max justify-between  text-gray-600 items-center"
               ref={container}
