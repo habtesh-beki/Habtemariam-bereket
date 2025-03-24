@@ -87,7 +87,6 @@ export default function App() {
   );
   useGSAP(
     () => {
-      // gsap.from(".good", { y: -300, duration: 1 });
       gsap.to(".open", {
         boxShadow: "0 0 15px 6px rgba(39, 214, 85, 0.7)",
         opacity: 1,
@@ -96,26 +95,6 @@ export default function App() {
         repeat: -1,
         yoyo: true,
       });
-      // gsap.from(".x", {
-      //   x: 300,
-      //   duration: 2,
-      // });
-      // gsap.from(".father-name", { x: -300, duration: 2 });
-      // gsap.from(".title", { x: -200, duration: 1 });
-      // gsap.from(".description", {
-      //   y: -100,
-      //   opacity: 0,
-      //   rotation: "random(-80, 80)",
-      //   duration: 0.7,
-      //   ease: "back",
-      //   stagger: 0.1,
-      // });
-      // gsap.to(".container", {
-      //   xPercent: -100,
-      //   ease: "none",
-      //   duration: 10,
-      //   repeat: -1,
-      // });
     },
 
     { scope: container }
@@ -155,17 +134,18 @@ export default function App() {
         duration: 0.3,
         scale: scale,
         ease: "power2.out",
-        overwrite: "auto",
+        overwrite: true,
       });
     }
-  }, [cursorPosition]);
+  }, [cursorPosition, scale]);
 
   useEffect(() => {
     const handleMouseEnter = () => {
+      // console.log("Enter", e.target);
       setScale(10);
-      console.log(scale);
     };
     const handleMouseLeave = () => {
+      // console.log("leave", e.target);
       setScale(1);
     };
     const hoverElements = document.querySelectorAll(".glass-animation");
@@ -192,9 +172,9 @@ export default function App() {
       >
         <div className="flex flex-col w-full h-full items-center  covered-bg">
           <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
-            <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-fit rounded-4xl items-center text-gray-100 glass-animation">
+            <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-max h-max rounded-4xl items-center text-gray-100 glass-animation">
               <a href="#home">
-                {" "}
+                {/* {" "} */}
                 <img
                   className="rounded-4xl cursor-pointer w-10 h-10"
                   src={ImageBg}
@@ -218,12 +198,9 @@ export default function App() {
             </div>
           </div>
 
-          <section
-            className=" flex flex-col items-center justify-center h-screen   gap-10 "
-            id="home"
-          >
+          <section className=" flex flex-col items-center justify-center h-screen  gap-10 w-full">
             <h3
-              className="flex gap-2 border z-0 w-fit px-10 py-2 text-xl rounded-4xl h-fit  text-gray-600 items-center"
+              className="flex gap-2 border w-max px-6 py-2 text-xl rounded-4xl h-max justify-between  text-gray-600 items-center"
               ref={container}
             >
               <span className="w-5 h-5 bg-[#27d655] rounded-3xl open "></span>
@@ -231,29 +208,30 @@ export default function App() {
             </h3>
             <div className="flex flex-col gap-4 z-0 w-1/2 text-white  justify-center items-center text-center ">
               <div className=" w-max h-max ">
-                <h1 className="flex gap-2 text-7xl blurred-text">
-                  <span className="">Habtemariam</span>
-                  <span className="">Bereket</span>
+                <h1 className="lg:text-7xl md:text-5xl text-4xl blurred-text ">
+                  Habtemariam Bereket
                 </h1>
               </div>
 
-              <h2 className="text-4xl blurred-text ">Full-Stack Developer</h2>
-              <h4 className="text-3xl blurred-text ">
+              <h2 className="lg:text-4xl md:text-2xl text-xl blurred-text ">
+                Full-Stack Developer
+              </h2>
+              <h4 className="lg:text-3xl md:text-xl text-lg blurred-text ">
                 I transform innovative ideas into powerful, intuitive web
                 applications using modern technologies.{" "}
               </h4>
 
-              <Button className="uppercase text-white w-50 h-16 text-2xl cursor-pointer bg-[#ff4d00] hover:bg-[#ff3a00] mt-10 glass-animation">
+              <Button className="uppercase text-white w-50 h-16 text-2xl cursor-pointer bg-[#ff4d00] hover:bg-[#ff3a00] mt-10 ">
                 <a href="mailto:habteshbeki@gmail.com">Get in touch</a>
               </Button>
             </div>
           </section>
 
-          <h2 className="text-3xl text-white uppercase font-bold mb-10">
+          <h2 className="text-3xl text-white uppercase font-bold mb-10 ">
             Some Of My Projects with image
           </h2>
           <div
-            className="flex w-full h-[100vh] overflow-hidden relative mb-10"
+            className="flex w-full h-[100vh] overflow-hidden relative mb-10 "
             ref={scrollRef}
             id="container_2"
           >
@@ -288,29 +266,40 @@ export default function App() {
           <MyExpertise />
           <MyWork />
           <section
-            className=" w-full flex flex-col items-center gap-6"
+            className=" w-full flex flex-col items-center gap-6 mt-10"
             ref={logoRef}
           >
-            <div className="glass-animation">
-              <h1 className="text-4xl font-bold text-white ">Tech-Stack</h1>
+            <div className="">
+              <h1 className="text-4xl font-bold text-white mb-10">
+                Tech-Stack
+              </h1>
             </div>
             <div
-              className="logo-animation grid w-1/2 h-[60vh] relative overflow-hidden"
+              className="logo-animation grid lg:w-1/2 w-full h-[60vh] relative overflow-hidden "
               id="tech-stack"
             >
-              <div className="first flex gap-10 absolute">
+              <div className="first flex lg:gap-10 md:gap-7 gap-5 absolute">
                 {SecondLineImagae.map((img) => (
-                  <img className="w-20 h-20" src={img} />
+                  <img
+                    className="lg:w-20 lg:h-20  md:w-15 md:h-15 w-10 h-10"
+                    src={img}
+                  />
                 ))}
               </div>
-              <div className="second flex gap-10 absolute top-30 ">
+              <div className="second flex lg:gap-10 md:gap-7 gap-5 absolute top-30 ">
                 {firstLineImagae.map((img) => (
-                  <img className="w-20 h-20" src={img} />
+                  <img
+                    className="lg:w-20 lg:h-20  md:w-15 md:h-15 w-10 h-10"
+                    src={img}
+                  />
                 ))}
               </div>
-              <div className="thried flex gap-10 top-60 absolute">
+              <div className="thried flex lg:gap-10 md:gap-7 gap-5 top-60 absolute">
                 {ThiredLineImagae.map((img) => (
-                  <img className="w-20 h-20" src={img} />
+                  <img
+                    className="lg:w-20 lg:h-20  md:w-15 md:h-15 w-10 h-10"
+                    src={img}
+                  />
                 ))}
               </div>
             </div>
@@ -320,17 +309,17 @@ export default function App() {
             id="contact"
           >
             <div
-              className=" flex flex-col items-center h-[55vh] w-1/2 mt-10 text-[#7c7e81] gap-8 text-center"
+              className=" flex flex-col items-center h-max lg:w-1/2 md:w-2/3 w-3/4 mt-10 text-[#7c7e81] gap-8 text-center"
               ref={containerFooter}
             >
-              <h3 className="flex gap-2 border w-fit px-10 py-2 text-xl rounded-4xl h-fit good text-gray-600 items-center ">
+              <h3 className="flex gap-2 border w-max px-5 justify-between py-2 text-xl rounded-4xl h-max good text-gray-600 items-center ">
                 <span className="w-5 h-5 bg-[#27d655] rounded-3xl footer-open-to-work "></span>
                 I'm currently available
               </h3>
               <p>
                 Got an idea? Starting a project? Need to chat? Let’s connect!
               </p>
-              <h2 className="text-6xl glass-animation">
+              <h2 className="lg:text-6xl md:text-4xl text-2xl">
                 Reach out, and let’s create something amazing together!
               </h2>
               <h1>
@@ -369,7 +358,7 @@ export default function App() {
                   </a>
                 </li>
               </ul>
-              <footer className="text-[#7c7e81] flex gap-2">
+              <footer className="text-[#7c7e81] flex gap-2 mb-3">
                 <Copyright /> <p>2025 Habtemariam Bereket</p>
               </footer>
             </div>
