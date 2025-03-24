@@ -1,11 +1,12 @@
 import ImageBg from "./assets/profile.jpg";
-import { Copyright } from "lucide-react";
+import { Copyright, Menu } from "lucide-react";
 import MyExpertise from "./components/MyExpertise";
 import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MyWork from "./components/MyWork";
+import Hamburger from "hamburger-react";
 import {
   firstLineImagae,
   SecondLineImagae,
@@ -25,6 +26,7 @@ export default function App() {
   const logoRef = useRef(null);
   const hoverAnimation = useRef<HTMLDivElement | null>(null);
   const containerFooter = useRef(null);
+  const [isOpen, setOpen] = useState(false);
 
   useGSAP(
     () => {
@@ -160,21 +162,23 @@ export default function App() {
       ac.abort();
     };
   }, []);
+  const handleIsOpen = () => {
+    setOpen((prv) => !prv);
+  };
 
   return (
     <>
       <div
         ref={hoverAnimation}
-        className="fixed w-6 h-6 bg-white rounded-4xl hover-anime z-[1000] mix-blend-difference"
+        className="fixed w-6 h-6 bg-white rounded-4xl hover-anime z-[1000] mix-blend-difference lg:block md:block sm:block hidden"
       ></div>
       <div
         className={`w-full h-auto bg-[url('./assets/bg-image.svg')] bg-no-repeat bg-cover p-0 overflow-hidden`}
       >
         <div className="flex flex-col w-full h-full items-center  covered-bg">
-          <div className="fixed left-1/2 flex justify-center transform -translate-x-1/2 w-fit z-1000">
+          <div className="fixed left-1/2  transform -translate-x-1/2 w-fit z-1000 lg:block md:block sm:block hidden">
             <div className="flex gap-15 justify-center mt-10 py-2 px-2 bg-[rgba(71,68,68,0.75)] w-max h-max rounded-4xl items-center text-gray-100 glass-animation">
               <a href="#home">
-                {/* {" "} */}
                 <img
                   className="rounded-4xl cursor-pointer w-10 h-10"
                   src={ImageBg}
@@ -189,13 +193,50 @@ export default function App() {
                   <a href="#my-work inline">My Work</a>
                 </li>
                 <li className="cursor-pointer py-2 px-3 hover:bg-[rgba(71,68,68,0.8)] duration-500 hover:border border-black rounded-2xl">
-                  <a href="#tech-stack">tech stack</a>
+                  <a href="#tech-stack">Tech Stack</a>
                 </li>
                 <li className="cursor-pointer py-2 px-3 hover:bg-[rgba(71,68,68,0.8)] duration-500 hover:border border-black rounded-2xl">
                   <a href="#contact">Contact</a>
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="fixed justify-between block sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden w-full z-[1000]">
+            <div className="w-full h-max p-2 flex justify-between bg-[#03070e] items-center">
+              <a href="#home">
+                <img
+                  className="rounded-4xl cursor-pointer w-10 h-10"
+                  src={ImageBg}
+                  alt="profile"
+                />
+              </a>
+              <Hamburger color="#FFFFFF" toggled={isOpen} toggle={setOpen} />
+              {/* <Menu className="text-white" size={38} /> */}
+            </div>
+            {/* {isOpen && ( */}
+            <div
+              className={`w-full text-white flex justify-center text-2xl bg-[#03070e] border-t py-4 transition-all duration-500 ease-in-out ${
+                isOpen
+                  ? "max-h-96 opacity-100"
+                  : "max-h-0 opacity-0 overflow-hidden"
+              }`}
+            >
+              <ul>
+                <li onClick={handleIsOpen} className="cursor-pointer">
+                  <a href="#expertise">Expertise</a>
+                </li>
+                <li onClick={handleIsOpen} className="cursor-pointer">
+                  <a href="#my-work">My Work</a>{" "}
+                </li>
+                <li onClick={handleIsOpen} className="cursor-pointer">
+                  <a href="#tech-stack">Tech Stack</a>
+                </li>
+                <li onClick={handleIsOpen} className="cursor-pointer">
+                  <a href="#contact">Contact</a>
+                </li>
+              </ul>
+            </div>
+            {/* )} */}
           </div>
 
           <section className=" flex flex-col items-center justify-center h-screen  gap-10 w-full">
@@ -213,7 +254,7 @@ export default function App() {
                 </h1>
               </div>
 
-              <h2 className="lg:text-4xl md:text-2xl text-xl blurred-text ">
+              <h2 className="lg:text-4xl md:text-2xl text-2xl blurred-text whitespace-nowrap">
                 Full-Stack Developer
               </h2>
               <h4 className="lg:text-3xl md:text-xl text-lg blurred-text ">
@@ -227,11 +268,11 @@ export default function App() {
             </div>
           </section>
 
-          <h2 className="text-3xl text-white uppercase font-bold mb-10 ">
+          <h2 className="lg:block md:block sm:block hidden text-3xl text-white uppercase font-bold mb-10 ">
             Some Of My Projects with image
           </h2>
           <div
-            className="flex w-full h-[100vh] overflow-hidden relative mb-10 "
+            className="lg:block md:block sm:block hidden w-full h-[100vh] overflow-hidden relative mb-10 "
             ref={scrollRef}
             id="container_2"
           >
@@ -326,12 +367,12 @@ export default function App() {
                 {} {}
               </h1>
               <Button className="uppercase text-white w-50 h-16 text-2xl cursor-pointer bg-[#ff4d00] hover:bg-[#ff3a00] mt-10">
-                <a href="https://t.me/HabtemariamB">Get in touch</a>
+                <a href="mailto:habteshbeki@gmail.com">Get in touch</a>
               </Button>
 
               <ul className="flex gap-3">
                 <li>
-                  <a href="">
+                  <a href="mailto:habteshbeki@gmail.com">
                     <img
                       className="w-10 h-10 cursor-pointer hover:scale-125"
                       src="/social-media/gmail.png"
@@ -340,7 +381,7 @@ export default function App() {
                   </a>
                 </li>
                 <li>
-                  <a href="">
+                  <a href="https://t.me/HabtemariamB">
                     <img
                       className="w-10 h-10 cursor-pointer hover:scale-125"
                       src="/social-media/telegram.png"
@@ -349,7 +390,7 @@ export default function App() {
                   </a>
                 </li>
                 <li>
-                  <a href="">
+                  <a href="https://www.linkedin.com/in/habtemariam-bereket-a13480328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
                     <img
                       className="w-10 h-10 cursor-pointer hover:scale-125"
                       src="/social-media/linkedin.png"
