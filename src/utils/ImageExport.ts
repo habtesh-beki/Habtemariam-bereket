@@ -1,5 +1,5 @@
 export const firstLineImagae = [
-  "/tech-stack/Deno.png",
+  "/tech-stack/React.png",
   "/tech-stack/Express.png",
   "/tech-stack/Git.png",
   "/tech-stack/GitHub.png",
@@ -16,7 +16,6 @@ export const SecondLineImagae = [
   "/tech-stack/Nodemon.png",
   "/tech-stack/PostgresSQL.png",
   "/tech-stack/Postman.png",
-  "/tech-stack/React.png",
   "/tech-stack/Redux.png",
 ];
 export const ThiredLineImagae = [
