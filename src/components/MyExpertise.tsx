@@ -1,13 +1,13 @@
 export default function MyExpertise() {
   return (
     <section
-      className="flex justify-center w-full  mt-800 h-[90vh] text-white"
+      className="flex justify-center w-full  mt-800 h-max text-white mb-10"
       id="expertise"
     >
-      <div className="w-1/2 flex flex-col items-center ">
+      <div className="lg:w-1/2 md:w-3/4 w-full flex flex-col items-center mx-2">
         <h1 className="text-3xl mb-15">My Expertise</h1>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="border-4 p-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
+        <div className="grid lg:grid-cols-2 md:grid-cols-2  gap-4">
+          <div className="border-2 lg:px-10 sm:px-6 px-2 py-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
             <h1 className="text-3xl mb-2">programming languages</h1>
             <p className="text-[#5f6361]">
               My primary programming languages are TypeScript and JavaScript,
@@ -15,7 +15,7 @@ export default function MyExpertise() {
               both frontend and backend development.
             </p>
           </div>
-          <div className="border-4 p-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
+          <div className="border-2 lg:px-10 sm:px-6 px-2 py-10  rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
             <h1 className="text-3xl mb-2">Front-end Development</h1>
             <p className="text-[#5f6361]">
               I specialize in frontend development, leveraging modern
@@ -25,7 +25,7 @@ export default function MyExpertise() {
             </p>
           </div>
 
-          <div className="border-4 p-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
+          <div className="border-2 lg:px-10 sm:px-6 px-2 py-10  rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
             <h1 className="text-3xl mb-2">Back-end Development</h1>
             <p className="text-[#5f6361]">
               I specialize in backend development, utilizing powerful tools like
@@ -33,7 +33,7 @@ export default function MyExpertise() {
               scalable, and efficient server-side solutions.
             </p>
           </div>
-          <div className=" border-4 p-10 rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
+          <div className=" border-2 lg:px-10 sm:px-6 px-2 py-10  rounded-2xl border-[#5f6361] Expretise-card overflow-hidden duration-400">
             <h1 className="text-3xl mb-2">Others</h1>
             <p className="text-[#5f6361]">
               I work with a variety of databases, including SQLite, MongoDB, and
