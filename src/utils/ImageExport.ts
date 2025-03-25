@@ -23,8 +23,8 @@ export const ThiredLineImagae = [
   "/tech-stack/SQLite.png",
   "/tech-stack/Tailwind CSS.png",
   "/tech-stack/TypeScript.png",
-  "/tech-stack/Vercel.png",
+  "/tech-stack/Prisma.png",
   "/tech-stack/Vite.js.png",
-  "/tech-stack/WebStorm.png",
+  "/tech-stack/TypeOrm.png",
   "/tech-stack/Bun.png",
 ];
